@@ -419,13 +419,18 @@ function addUpStudentCredits(reportCardTableElement) {
 function calculateSemesterGpa(reportCardTableElement) {
 	let totalPoints = 0;
 
-	let pointsElements = reportCardTableElement.querySelectorAll(".pts-col");
+	let pointsElements = reportCardTableElement.querySelectorAll(".lett-col");
 
 	for (let i = 0; i < pointsElements.length; i++) {
-		if((i === 0) || (parseFloat(pointsElements[i].textContent) === NaN)) continue;
-		totalPoints += parseFloat(pointsElements[i].textContent);
+		if((i === 0)) continue;
+		if(gpaPointsLookup[pointsElements[i].textContent] === undefined) {
+			//do nothing
+		} else {
+			totalPoints = gpaPointsLookup[pointsElements[i].textContent]
+		};
+
 	}
-	console.log(totalPoints);
+
 	let totalCredits = addUpStudentCredits(reportCardTableElement);
 	let GPA = (totalPoints*totalCredits)/totalCredits;
 	
